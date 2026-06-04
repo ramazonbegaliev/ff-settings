@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Fire Ultra Sensitivity Generator</title>
+    <!-- Скриншот олиш учун кучли кутубхона -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        /* Геймерлар услубидаги тўқ қизил оловли фон */
+        body {
+            background: #000000 radial-gradient(circle at center, #2a0101 0%, #050000 80%, #000000 100%);
+            color: #fff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        /* Асосий мослашувчан (Responsive) контейнер */
+        .main-container {
+            width: 100%;
+            max-width: 550px; /* Ҳам PC, ҳам Мобил учун идеал ўлчам */
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Настройкалар блоки (Расмга тушадиган қисми) */
+        .settings-card {
+            background: rgba(13, 13, 13, 0.95);
+            border: 2px solid #cc1111;
+            border-radius: 8px;
+            padding: 25px 20px;
+            box-shadow: 0 0 30px rgba(204, 17, 17, 0.3);
+        }
+
+        /* Телефон модели учун инпут */
+        .input-group {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .device-input {
+            width: 100%;
+            max-width: 450px;
+            background: #000000;
+            border: 1px solid #ffcc00;
+            color: #ffcc00;
+            text-align: center;
+            padding: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            outline: none;
+            border-radius: 4px;
+            box-sizing: border-box;
+            box-shadow: inset 0 0 8px rgba(255, 204, 0, 0.2);
+            transition: 0.3s;
+        }
+        .device-input:focus {
+            border-color: #fff;
+            box-shadow: 0 0 15px rgba(204, 17, 17, 0.7);
+        }
+
+        /* Настройка қаторлари */
+        .setting-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 14px;
+            height: 32px;
+        }
+        .setting-row:last-child { margin-bottom: 0; }
+
+        /* Созлама номлари */
+        .label {
+            width: 150px;
+            font-size: 14px;
+            color: #e0e0e0;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Рақамлар кўрсаткичи */
+        .value-box {
+            width: 45px;
+            text-align: right;
+            font-size: 14px;
+            color: #ffcc00;
+            margin-right: 15px;
+            font-weight: bold;
+            text-shadow: 0 0 4px #ff0000;
+        }
+
+        /* Слайдер ва тугмалар атрофи */
+        .slider-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #2d2d2d;
+            padding: 3px 8px;
+            border-radius: 3px;
+            height: 22px;
+        }
+
+        /* Кичик плюс/минус тугмачалари */
+        .ctrl-btn {
+            background: #1c1c1c;
+            border: 1px solid #444;
+            color: #ffcc00;
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 2px;
+            user-select: none;
+        }
+        .ctrl-btn:hover {
+            background: #cc1111;
+            color: #fff;
+            border-color: #ff4444;
+        }
+
+        /* Сариқ гейминг слайдери */
+        .range-field {
+            flex: 1;
+            margin: 0 10px;
+            display: flex;
+            align-items: center;
+        }
+        .ff-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 4px;
+            background: #222;
+            outline: none;
+            border-radius: 2px;
+        }
+        .ff-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 8px;
+            height: 14px;
+            background: #ffcc00;
+            border: 1px solid #000;
+            cursor: pointer;
+            border-radius: 1px;
+            box-shadow: 0 0 6px #ffcc00;
+        }
+
+        /* Пастки тугмалар блоки (Расмга тушмайди) */
+        .buttons-area {
+            display: flex;
+            gap: 12px;
+        }
+        .action-btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .btn-generate {
+            background: linear-gradient(180deg, #ffcc00 0%, #b38f00 100%);
+            color: #000;
+            border: 1px solid #ffdb4d;
+        }
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 204, 0, 0.4);
+        }
+        .btn-screenshot {
+            background: linear-gradient(180deg, #ff1a1a 0%, #800000 100%);
+            color: #fff;
+            border: 1px solid #ff5555;
+        }
+        .btn-screenshot:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 26, 26, 0.4);
+        }
+
+        /* Мобил қурилмалар учун қўшимча мослашиш (Микро-экранлар) */
+        @media (max-width: 420px) {
+            .label { width: 110px; font-size: 12px; }
+            .value-box { width: 35px; font-size: 12px; margin-right: 8px; }
+            .device-input { font-size: 15px; padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        
+        <!-- Асосий Настройка блоги (Скриншот тугмаси босилганда фақат шу блок расм бўлади) -->
+        <div id="capture-zone" class="settings-card">
+            
+            <!-- Телефон моделини киритиш жойи -->
+            <div class="input-group">
+                <input type="text" id="phone-model" class="device-input" placeholder="ТЕЛЕФОН МОДЕЛИНИ КИРИТИНГ..." value="SAMSUNG GALAXY A10">
+            </div>
+
+            <!-- 1. General -->
+            <div class="setting-row">
+                <span class="label">General</span>
+                <span class="value-box" id="v-gen">185</span>
+                <div class="slider-wrapper">
+                    <div class="ctrl-btn" onclick="tweak('gen', -1)">-</div>
+                    <div class="range-field">
+                        <input type="range" id="s-gen" class="ff-slider" min="0" max="200" value="185" oninput="sync('gen')">
+                    </div>
+                    <div class="ctrl-btn" onclick="tweak('gen', 1)">+</div>
+                </div>
+            </div>
+
+            <!-- 2. Red Dot -->
+            <div class="setting-row">
+                <span class="label">Red Dot</span>
+                <span class="value-box" id="v-red">170</span>
+                <div class="slider-wrapper">
+                    <div class="ctrl-btn" onclick="tweak('red', -1)">-</div>
+                    <div class="range-field">
+                        <input type="range" id="s-red" class="ff-slider" min="0" max="200" value="170" oninput="sync('red')">
+                    </div>
+                    <div class="ctrl-btn" onclick="tweak('red', 1)">+</div>
+                </div>
+            </div>
+
+            <!-- 3. 2x Scope -->
+            <div class="setting-row">
+                <span class="label">2x Scope</span>
+                <span class="value-box" id="v-2x">150</span>
+                <div class="slider-wrapper">
+                    <div class="ctrl-btn" onclick="tweak('2x', -1)">-</div>
+                    <div class="range-field">
+                        <input type="range" id="s-2x" class="ff-slider" min="0" max="200" value="150" oninput="sync('2x')">
+                    </div>
+                    <div class="ctrl-btn" onclick="tweak('2x', 1)">+</div>
+                </div>
+            </div>
+
+            <!-- 4. 4x Scope -->
+            <div class="setting-row">
+                <span class="label">4x Scope</span>
+                <span class="value-box" id="v-4x">125</span>
+                <div class="slider-wrapper">
+                    <div class="ctrl-btn" onclick="tweak('4x', -1)">-</div>
+                    <div class="range-field">
+                        <input type="range" id="s-4x" class="ff-slider" min="0" max="200" value="125" oninput="sync('4x')">
+                    </div>
+                    <div class="ctrl-btn" onclick="tweak('4x', 1)">+</div>
+                </div>
+            </div>
+
+            <!-- 5. Sniper Scope -->
+            <div class="setting-row">
+                <span class="label">Sniper Scope</span>
+                <span class="value-box" id="v-snip">90</span>
+                <div class="slider-wrapper">
+                    <div class="ctrl-btn" onclick="tweak('snip', -1)">-</div>
+                    <div class="range-field">
+                        <input type="range" id="s-snip" class="ff-slider" min="0" max="200" value="90" oninput="sync('snip')">
+                    </div>
+                    <div class="ctrl-btn" onclick="tweak('snip', 1)">+</div>
+                </div>
+            </div>
+
+            <!-- 6. Free Camera Button -->
+            <div class="setting-row">
+                <span class="label">Free Camera</span>
+                <span class="value-box" id="v-free">200</span>
+                <div class="slider-wrapper">
+                    <div class="ctrl-btn" onclick="tweak('free', -1)">-</div>
+                    <div class="range-field">
+                        <input type="range" id="s-free" class="ff-slider" min="0" max="200" value="200" oninput="sync('free')">
+                    </div>
+                    <div class="ctrl-btn" onclick="tweak('free', 1)">+</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Бошқарув тугмалари (Пастда, озода ва расмга халақит бермайди) -->
+        <div class="buttons-area">
+            <button class="action-btn btn-generate" onclick="generateRandomSettings()">SEARCH</button>
+            <button class="action-btn btn-screenshot" onclick="captureHDPanel()">Screenshot</button>
+        </div>
+
+    </div>
+
+    <script>
+        // Слайдер қиймати ўзгарганда рақамни янгилаш
+        function sync(id) {
+            const slider = document.getElementById('s-' + id);
+            document.getElementById('v-' + id).innerText = slider.value;
+        }
+
+        // Плюс ва Минус тугмалари босилганда
+        function tweak(id, amount) {
+            const slider = document.getElementById('s-' + id);
+            let newVal = parseInt(slider.value) + amount;
+            if (newVal >= 0 && newVal <= 200) {
+                slider.value = newVal;
+                sync(id);
+            }
+        }
+
+        // Рандомизатор функцияси (Барча 6 та созлама учун)
+        function generateRandomSettings() {
+            const ids = ['gen', 'red', '2x', '4x', 'snip', 'free'];
+            ids.forEach(id => {
+                let randomVal = Math.floor(Math.random() * 201); // 0 дан 200 гача рандом
+                const slider = document.getElementById('s-' + id);
+                slider.value = randomVal;
+                sync(id);
+            });
+        }
+
+        // Профессионал HD Скриншот тизими
+        function captureHDPanel() {
+            const target = document.getElementById('capture-zone');
+            const phoneName = document.getElementById('phone-model').value.trim() || 'FreeFire';
+            
+            html2canvas(target, {
+                backgroundColor: "#0d0d0d",
+                scale: 3, // Расм сифати жуда тиниқ (4K Ultra HD) чиқиши учун
+                logging: false
+            }).then(canvas => {
+                const downloadLink = document.createElement('a');
+                downloadLink.download = 'Sensitivity_' + phoneName.replace(/\s+/g, '_') + '.png';
+                downloadLink.href = canvas.toDataURL('image/png');
+                downloadLink.click();
+            });
+        }
+    </script>
+</body>
+</html>
